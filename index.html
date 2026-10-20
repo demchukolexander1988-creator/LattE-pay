@@ -14,7 +14,7 @@
 --gold-light: #F3E5AB;
 --purple-brand: #3D1E45;
 --purple-dark: #2A1230;
---glass-bg: rgba(26, 12, 28, 0.82);
+--glass-bg: rgba(26, 12, 28, 0.88);
 --glass-border: rgba(212, 175, 55, 0.4);
 --text-light: #F8F5F0;
 --text-muted: #C5B8C8;
@@ -41,12 +41,13 @@ top: 0; left: 0; right: 0; bottom: 0;
 background: rgba(13, 5, 14, 0.65);
 backdrop-filter: blur(8px);
 -webkit-backdrop-filter: blur(8px);
-z-index: 1;
+z-index: 0; /* Виправлено: шар залишається під карткою */
+pointer-events: none; /* Виправлено: шар не перехоплює кліки */
 }
 
 .container {
 position: relative;
-z-index: 2;
+z-index: 10; /* Виправлено: картка та кнопки завжди поверх усього */
 width: 100%;
 max-width: 420px;
 padding: 32px 20px 24px;
@@ -67,9 +68,10 @@ right: 20px;
 background: transparent;
 border: none;
 color: var(--gold-primary);
-font-size: 1.2rem;
+font-size: 1.4rem;
 cursor: pointer;
-opacity: 0.6;
+z-index: 20;
+padding: 5px;
 }
 
 .logo {
@@ -125,6 +127,7 @@ font-family: 'Montserrat', sans-serif;
 
 .btn-custom { grid-column: span 3; background: rgba(61, 30, 69, 0.7); }
 
+Олександр:
 .btn-skip {
 width: 100%;
 background: transparent;
@@ -139,7 +142,6 @@ margin-top: 6px;
 
 .custom-input-container, .admin-panel { display: none; margin-bottom: 14px; }
 
-Олександр:
 select, input {
 width: 100%;
 padding: 12px;
@@ -194,8 +196,8 @@ line-height: 1.7;
 
 <!-- БЛОК АДМІНІСТРАТОРА -->
 <div class="admin-panel" id="adminPanel">
-<div class="subtitle">Панель офіціанта</div>
-<label style="font-size:0.8rem; color:var(--gold-light);">Оберіть стіл:</label>
+<div class="subtitle" style="margin-bottom:12px;">Панель офіціанта</div>
+<label style="font-size:0.8rem; color:var(--gold-light); display:block; margin-bottom:4px;">Оберіть стіл:</label>
 <select id="adminTableSelect">
 <option value="1">Стіл № 1</option>
 <option value="2">Стіл № 2</option>
@@ -207,7 +209,7 @@ line-height: 1.7;
 <option value="8">Стіл № 8</option>
 </select>
 
-<label style="font-size:0.8rem; color:var(--gold-light);">Сума чека (грн):</label>
+<label style="font-size:0.8rem; color:var(--gold-light); display:block; margin-bottom:4px;">Сума чека (грн):</label>
 <input type="number" id="adminBillInput" placeholder="Наприклад: 350">
 <button class="btn-admin-save" onclick="saveAdminBill()">Встановити чек для столу</button>
 <div id="adminStatus" style="font-size: 0.85rem; color: var(--gold-light); margin-top: 10px;"></div>
@@ -239,6 +241,7 @@ line-height: 1.7;
 
 <div class="wish-text">Дякуємо за довіру та бажаємо смачного! ❤️</div>
 
+Олександр:
 <div class="footer">
 <div>📍 вул. Френчка, 2</div>
 <div>☎️ <a href="tel:+380664554510">+380 (66) 455-45-10</a></div>
@@ -249,9 +252,8 @@ line-height: 1.7;
 <script>
 const TG_BOT_TOKEN = '8882080931:AAEiYapGi1umRWuHEQat0f-cUtTEuJNiaj8'; 
 const TG_CHAT_ID = '-1005428793005'; 
-const MONO_PAYMENT_URL = 'https://plata.monobank.ua/pay/...';
+const MONO_PAYMENT_URL = 'https://plata.monobank.ua/pay/...'; 
 
-Олександр:
 const urlParams = new URLSearchParams(window.location.search);
 const tableNumber = urlParams.get('table') || '1';
 const isModeAdmin = urlParams.get('mode') === 'admin';
@@ -261,13 +263,14 @@ let billAmount = parseFloat(urlParams.get('bill')) || parseFloat(localStorage.ge
 document.getElementById('tableBadge').innerText = Стіл № ${tableNumber};
 document.getElementById('billValue').innerText = billAmount;
 
+// Автоматично відкриває адмінку, якщо в URL є ?mode=admin
 if (isModeAdmin) {
 document.getElementById('adminPanel').style.display = 'block';
 }
 
 function toggleAdminView() {
 const panel = document.getElementById('adminPanel');
-panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
 }
 
 function saveAdminBill() {
@@ -285,7 +288,7 @@ document.getElementById('adminStatus').innerHTML = ✅ Чек ${inputBill} гр
 
 function toggleCustomInput() {
 const container = document.getElementById('customInputContainer');
-container.style.display = container.style.display === 'block' ? 'none' : 'block';
+container.style.display = (container.style.display === 'block') ? 'none' : 'block';
 }
 
 function submitCustomTip() {
