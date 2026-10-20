@@ -202,6 +202,9 @@ line-height: 1.7;
 <option value="3">Стіл № 3</option>
 <option value="4">Стіл № 4</option>
 <option value="5">Стіл № 5</option>
+<option value="6">Стіл № 6</option>
+<option value="7">Стіл № 7</option>
+<option value="8">Стіл № 8</option>
 </select>
 
 <label style="font-size:0.8rem; color:var(--gold-light);">Сума чека (грн):</label>
@@ -246,13 +249,13 @@ line-height: 1.7;
 <script>
 const TG_BOT_TOKEN = '8882080931:AAEiYapGi1umRWuHEQat0f-cUtTEuJNiaj8'; 
 const TG_CHAT_ID = '-1005428793005'; 
-const MONO_PAYMENT_URL = 'https://plata.monobank.ua/pay/...'; 
+const MONO_PAYMENT_URL = 'https://plata.monobank.ua/pay/...';
 
+Олександр:
 const urlParams = new URLSearchParams(window.location.search);
 const tableNumber = urlParams.get('table') || '1';
 const isModeAdmin = urlParams.get('mode') === 'admin';
 
-Олександр:
 let billAmount = parseFloat(urlParams.get('bill')) || parseFloat(localStorage.getItem(table_bill_${tableNumber})) || 0;
 
 document.getElementById('tableBadge').innerText = Стіл № ${tableNumber};
