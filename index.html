@@ -14,9 +14,8 @@
 --gold-light: #F3E5AB;
 --purple-brand: #3D1E45;
 --purple-dark: #2A1230;
---purple-hover: #52275C;
---glass-bg: rgba(26, 12, 28, 0.65);
---glass-border: rgba(212, 175, 55, 0.35);
+--glass-bg: rgba(26, 12, 28, 0.72);
+--glass-border: rgba(212, 175, 55, 0.4);
 --text-light: #F8F5F0;
 --text-muted: #C5B8C8;
 }
@@ -34,85 +33,256 @@ min-height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
-background: #0D050E url('background-wall.jpg') no-repeat center center fixed;
+background: #0D050E url('background-wall.jpg') no-repeat center center fixed;
 background-size: cover;
 position: relative;
-overflow-x: hidden;
 }
 
-/* Фонові затемнення (45%) та золотисті відблиски */
 body::before {
 content: '';
 position: absolute;
 top: 0; left: 0; right: 0; bottom: 0;
-background: 
-radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.25) 0%, transparent 40%),
-radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.18) 0%, transparent 45%),
-linear-gradient(135deg, rgba(13, 5, 14, 0.45) 0%, rgba(26, 12, 28, 0.55) 100%);
-backdrop-filter: blur(6px);
--webkit-backdrop-filter: blur(6px);
+background: rgba(13, 5, 14, 0.55);
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
 z-index: 1;
 }
 
-/* Glassmorphism картка */
 .container {
 position: relative;
 z-index: 2;
 width: 100%;
 max-width: 420px;
-padding: 36px 24px 28px;
+padding: 32px 20px 24px;
 margin: 16px;
 background: var(--glass-bg);
 border: 1px solid var(--glass-border);
 border-radius: 28px;
 backdrop-filter: blur(16px);
 -webkit-backdrop-filter: blur(16px);
-box-shadow: 
-0 20px 50px rgba(0, 0, 0, 0.7),
-inset 0 1px 1px rgba(255, 255, 255, 0.15),
-0 0 30px rgba(212, 175, 55, 0.15);
+box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.15);
 text-align: center;
 }
 
-/* Логотип яскравий із золотим сяйвом */
 .logo {
-width: 125px;
+width: 115px;
 height: auto;
-margin-bottom: 16px;
-filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
+margin-bottom: 12px;
+filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
 }
 
 .subtitle {
 font-family: 'Cormorant Garamond', serif;
-font-size: 1.45rem;
+font-size: 1.4rem;
 font-weight: 700;
 color: var(--gold-primary);
-margin-bottom: 8px;
-letter-spacing: 0.5px;
+margin-bottom: 6px;
 }
 
 .appreciation-text {
-font-size: 0.92rem;
+font-size: 0.9rem;
 color: var(--text-muted);
-margin-bottom: 20px;
-line-height: 1.4;
+margin-bottom: 16px;
 }
 
 .table-badge {
 display: inline-block;
-padding: 6px 20px;
-background: rgba(212, 175, 55, 0.12);
+padding: 5px 16px;
+background: rgba(212, 175, 55, 0.15);
 border: 1px solid var(--gold-primary);
 border-radius: 20px;
-font-size: 0.88rem;
+font-size: 0.85rem;
 color: var(--gold-primary);
 margin-bottom: 10px;
 font-weight: 600;
-letter-spacing: 1px;
 }
 
 .bill-amount-display {
-font-size: 1.15rem;
+font-size: 1.1rem;
 color: var(--text-light);
-margin-bottom: 22px;
-font-weight: 50
+margin-bottom: 20px;
+}
+
+.bill-amount-display span {
+color: var(--gold-primary);
+font-weight: 700;
+font-size: 1.35rem;
+}
+
+.buttons-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+margin-bottom: 10px;
+}
+
+.btn-option {
+background: linear-gradient(145deg, var(--purple-brand), var(--purple-dark));
+border: 1px solid var(--gold-primary);
+color: var(--gold-light);
+padding: 14px 6px;
+font-size: 1rem;
+font-weight: 600;
+border-radius: 14px;
+cursor: pointer;
+font-family: 'Montserrat', sans-serif;
+box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.btn-option:active {
+transform: scale(0.96);
+}
+
+.btn-custom {
+grid-column: span 3;
+background: rgba(61, 30, 69, 0.7);
+}
+
+.btn-skip {
+width: 100%;
+background: transparent;
+border: 1px solid rgba(255, 255, 255, 0.2);
+color: var(--text-muted);
+padding: 12px;
+font-size: 0.9rem;
+border-radius: 14px;
+cursor: pointer;
+margin-top: 6px;
+}
+
+.custom-input-container {
+display: none;
+margin-bottom: 14px;
+}
+
+Олександр:
+.custom-input {
+width: 100%;
+padding: 12px;
+background: rgba(18, 7, 20, 0.9);
+border: 1px solid var(--gold-primary);
+border-radius: 12px;
+color: var(--gold-primary);
+font-size: 1.05rem;
+text-align: center;
+outline: none;
+}
+
+.custom-submit-btn {
+width: 100%;
+margin-top: 6px;
+padding: 10px;
+background: var(--gold-primary);
+color: #120F0D;
+font-weight: 700;
+border: none;
+border-radius: 12px;
+cursor: pointer;
+}
+
+.wish-text {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.05rem;
+font-style: italic;
+color: var(--gold-primary);
+margin-top: 18px;
+margin-bottom: 8px;
+}
+
+.footer {
+margin-top: 14px;
+padding-top: 12px;
+border-top: 1px solid rgba(212, 175, 55, 0.2);
+font-size: 0.8rem;
+color: var(--text-muted);
+line-height: 1.7;
+}
+
+.footer a {
+color: var(--gold-primary);
+text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<img src="logo-latte.png" alt="Latte Logo" class="logo">
+
+<div class="subtitle">Місце, де затишок та смак зустрічаються</div>
+<div class="appreciation-text">Якщо вам сподобалось, команді буде дуже приємно ❤️</div>
+
+<div class="table-badge" id="tableBadge">Стіл № --</div>
+<div class="bill-amount-display" id="billDisplay">Рахунок: <span id="billValue">0</span> грн</div>
+
+<div class="custom-input-container" id="customInputContainer">
+<input type="number" id="customAmount" class="custom-input" placeholder="Сума подяки (грн)" min="1">
+<button class="custom-submit-btn" onclick="submitCustomTip()">Оплатити з цією сумою</button>
+</div>
+
+<div class="buttons-grid">
+<button class="btn-option" onclick="payWithTip(0.06)">6%</button>
+<button class="btn-option" onclick="payWithTip(0.10)">10%</button>
+<button class="btn-option" onclick="payWithTip(0.20)">20%</button>
+<button class="btn-option btn-custom" onclick="toggleCustomInput()">Інша сума</button>
+</div>
+
+<button class="btn-skip" onclick="payWithTip(0)">Без подяки</button>
+
+<div class="wish-text">Дякуємо за довіру та бажаємо смачного! ❤️</div>
+
+<div class="footer">
+<div>📍 вул. Френчка, 2</div>
+<div>☎️ <a href="tel:+380000000000">+380 (00) 000-00-00</a></div>
+<div>📷 <a href="https://www.instagram.com/_lattecafe_?obrf=MWp2Y2d1MnZucGs4Nw==" target="_blank">@_lattecafe_</a></div>
+</div>
+</div>
+
+<script>
+const TG_BOT_TOKEN = '8882080931:AAEiYapGi1umRWuHEQat0f-cUtTEuJNiaj8'; 
+const TG_CHAT_ID = '-1005428793005'; 
+const MONO_PAYMENT_URL = 'https://plata.monobank.ua/pay/...'; 
+
+const urlParams = new URLSearchParams(window.location.search);
+const tableNumber = urlParams.get('table') || '1';
+let billAmount = parseFloat(urlParams.get('bill')) || parseFloat(localStorage.getItem(table_bill_${tableNumber})) || 0;
+
+document.getElementById('tableBadge').innerText = Стіл № ${tableNumber};
+document.getElementById('billValue').innerText = billAmount;
+
+function toggleCustomInput() {
+const container = document.getElementById('customInputContainer');
+container.style.display = container.style.display === 'block' ? 'none' : 'block';
+if (container.style.display === 'block') document.getElementById('customAmount').focus();
+}
+
+function submitCustomTip() {
+const customVal = parseFloat(document.getElementById('customAmount').value) || 0;
+processPayment(customVal);
+}
+
+function payWithTip(percent) {
+const tipAmount = Math.round(billAmount * percent);
+processPayment(tipAmount);
+}
+
+async function processPayment(tip) {
+const total = billAmount + tip;
+
+Олександр:
+const timeStr = new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+const message = ☕️ <b>Нова оплата в Latte!</b>\n\n📍 <b>Стіл:</b> №${tableNumber}\n🧾 <b>Рахунок:</b> ${billAmount} грн\n❤️ <b>Подяка:</b> ${tip} грн\n💳 <b>Разом:</b> ${total} грн\n🕒 <b>Час:</b> ${timeStr};
+
+try {
+fetch(https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ chat_id: TG_CHAT_ID, text: message, parse_mode: 'HTML' })
+}).catch(err => console.error(err));
+} catch (e) {}
+
+window.location.href = ${MONO_PAYMENT_URL}?amount=${total}&table=${tableNumber}&tip=${tip};
+}
+</script>
+</body>
+</html>
