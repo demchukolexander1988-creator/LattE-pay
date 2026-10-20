@@ -14,17 +14,13 @@
 --gold-light: #F3E5AB;
 --purple-brand: #3D1E45;
 --purple-dark: #2A1230;
---glass-bg: rgba(26, 12, 28, 0.72);
+--glass-bg: rgba(26, 12, 28, 0.82);
 --glass-border: rgba(212, 175, 55, 0.4);
 --text-light: #F8F5F0;
 --text-muted: #C5B8C8;
 }
 
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
 font-family: 'Montserrat', sans-serif;
@@ -42,7 +38,7 @@ body::before {
 content: '';
 position: absolute;
 top: 0; left: 0; right: 0; bottom: 0;
-background: rgba(13, 5, 14, 0.55);
+background: rgba(13, 5, 14, 0.65);
 backdrop-filter: blur(8px);
 -webkit-backdrop-filter: blur(8px);
 z-index: 1;
@@ -64,6 +60,18 @@ box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.15);
 text-align: center;
 }
 
+.admin-toggle {
+position: absolute;
+top: 15px;
+right: 20px;
+background: transparent;
+border: none;
+color: var(--gold-primary);
+font-size: 1.2rem;
+cursor: pointer;
+opacity: 0.6;
+}
+
 .logo {
 width: 115px;
 height: auto;
@@ -79,11 +87,7 @@ color: var(--gold-primary);
 margin-bottom: 6px;
 }
 
-.appreciation-text {
-font-size: 0.9rem;
-color: var(--text-muted);
-margin-bottom: 16px;
-}
+.appreciation-text { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; }
 
 .table-badge {
 display: inline-block;
@@ -97,17 +101,8 @@ margin-bottom: 10px;
 font-weight: 600;
 }
 
-.bill-amount-display {
-font-size: 1.1rem;
-color: var(--text-light);
-margin-bottom: 20px;
-}
-
-.bill-amount-display span {
-color: var(--gold-primary);
-font-weight: 700;
-font-size: 1.35rem;
-}
+.bill-amount-display { font-size: 1.1rem; color: var(--text-light); margin-bottom: 20px; }
+.bill-amount-display span { color: var(--gold-primary); font-weight: 700; font-size: 1.35rem; }
 
 .buttons-grid {
 display: grid;
@@ -126,17 +121,9 @@ font-weight: 600;
 border-radius: 14px;
 cursor: pointer;
 font-family: 'Montserrat', sans-serif;
-box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-.btn-option:active {
-transform: scale(0.96);
-}
-
-.btn-custom {
-grid-column: span 3;
-background: rgba(61, 30, 69, 0.7);
-}
+.btn-custom { grid-column: span 3; background: rgba(61, 30, 69, 0.7); }
 
 .btn-skip {
 width: 100%;
@@ -150,13 +137,10 @@ cursor: pointer;
 margin-top: 6px;
 }
 
-.custom-input-container {
-display: none;
-margin-bottom: 14px;
-}
+.custom-input-container, .admin-panel { display: none; margin-bottom: 14px; }
 
 Олександр:
-.custom-input {
+select, input {
 width: 100%;
 padding: 12px;
 background: rgba(18, 7, 20, 0.9);
@@ -166,12 +150,12 @@ color: var(--gold-primary);
 font-size: 1.05rem;
 text-align: center;
 outline: none;
+margin-bottom: 10px;
 }
 
-.custom-submit-btn {
+.custom-submit-btn, .btn-admin-save {
 width: 100%;
-margin-top: 6px;
-padding: 10px;
+padding: 12px;
 background: var(--gold-primary);
 color: #120F0D;
 font-weight: 700;
@@ -198,17 +182,37 @@ color: var(--text-muted);
 line-height: 1.7;
 }
 
-.footer a {
-color: var(--gold-primary);
-text-decoration: none;
-}
+.footer a { color: var(--gold-primary); text-decoration: none; }
 </style>
 </head>
 <body>
 
 <div class="container">
+<button class="admin-toggle" onclick="toggleAdminView()" title="Панель офіціанта">⚙️</button>
+
 <img src="logo-latte.png" alt="Latte Logo" class="logo">
 
+<!-- БЛОК АДМІНІСТРАТОРА -->
+<div class="admin-panel" id="adminPanel">
+<div class="subtitle">Панель офіціанта</div>
+<label style="font-size:0.8rem; color:var(--gold-light);">Оберіть стіл:</label>
+<select id="adminTableSelect">
+<option value="1">Стіл № 1</option>
+<option value="2">Стіл № 2</option>
+<option value="3">Стіл № 3</option>
+<option value="4">Стіл № 4</option>
+<option value="5">Стіл № 5</option>
+</select>
+
+<label style="font-size:0.8rem; color:var(--gold-light);">Сума чека (грн):</label>
+<input type="number" id="adminBillInput" placeholder="Наприклад: 350">
+<button class="btn-admin-save" onclick="saveAdminBill()">Встановити чек для столу</button>
+<div id="adminStatus" style="font-size: 0.85rem; color: var(--gold-light); margin-top: 10px;"></div>
+<hr style="border-color: var(--glass-border); margin: 15px 0;">
+</div>
+
+<!-- БЛОК КЛІЄНТА -->
+<div id="guestPanel">
 <div class="subtitle">Місце, де затишок та смак зустрічаються</div>
 <div class="appreciation-text">Якщо вам сподобалось, команді буде дуже приємно ❤️</div>
 
@@ -216,7 +220,7 @@ text-decoration: none;
 <div class="bill-amount-display" id="billDisplay">Рахунок: <span id="billValue">0</span> грн</div>
 
 <div class="custom-input-container" id="customInputContainer">
-<input type="number" id="customAmount" class="custom-input" placeholder="Сума подяки (грн)" min="1">
+<input type="number" id="customAmount" placeholder="Сума подяки (грн)" min="1">
 <button class="custom-submit-btn" onclick="submitCustomTip()">Оплатити з цією сумою</button>
 </div>
 
@@ -228,12 +232,13 @@ text-decoration: none;
 </div>
 
 <button class="btn-skip" onclick="payWithTip(0)">Без подяки</button>
+</div>
 
 <div class="wish-text">Дякуємо за довіру та бажаємо смачного! ❤️</div>
 
 <div class="footer">
 <div>📍 вул. Френчка, 2</div>
-<div>☎️ <a href="tel:+380000000000">+380 (00) 000-00-00</a></div>
+<div>☎️ <a href="tel:+380664554510">+380 (66) 455-45-10</a></div>
 <div>📷 <a href="https://www.instagram.com/_lattecafe_?obrf=MWp2Y2d1MnZucGs4Nw==" target="_blank">@_lattecafe_</a></div>
 </div>
 </div>
@@ -245,15 +250,39 @@ const MONO_PAYMENT_URL = 'https://plata.monobank.ua/pay/...';
 
 const urlParams = new URLSearchParams(window.location.search);
 const tableNumber = urlParams.get('table') || '1';
+const isModeAdmin = urlParams.get('mode') === 'admin';
+
+Олександр:
 let billAmount = parseFloat(urlParams.get('bill')) || parseFloat(localStorage.getItem(table_bill_${tableNumber})) || 0;
 
 document.getElementById('tableBadge').innerText = Стіл № ${tableNumber};
 document.getElementById('billValue').innerText = billAmount;
 
+if (isModeAdmin) {
+document.getElementById('adminPanel').style.display = 'block';
+}
+
+function toggleAdminView() {
+const panel = document.getElementById('adminPanel');
+panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+}
+
+function saveAdminBill() {
+const selectedTable = document.getElementById('adminTableSelect').value;
+const inputBill = parseFloat(document.getElementById('adminBillInput').value);
+
+if (!inputBill || inputBill <= 0) {
+alert('Введіть суму!');
+return;
+}
+
+localStorage.setItem(table_bill_${selectedTable}, inputBill);
+document.getElementById('adminStatus').innerHTML = ✅ Чек ${inputBill} грн збережено для Столу №${selectedTable}!;
+}
+
 function toggleCustomInput() {
 const container = document.getElementById('customInputContainer');
 container.style.display = container.style.display === 'block' ? 'none' : 'block';
-if (container.style.display === 'block') document.getElementById('customAmount').focus();
 }
 
 function submitCustomTip() {
@@ -268,8 +297,6 @@ processPayment(tipAmount);
 
 async function processPayment(tip) {
 const total = billAmount + tip;
-
-Олександр:
 const timeStr = new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
 const message = ☕️ <b>Нова оплата в Latte!</b>\n\n📍 <b>Стіл:</b> №${tableNumber}\n🧾 <b>Рахунок:</b> ${billAmount} грн\n❤️ <b>Подяка:</b> ${tip} грн\n💳 <b>Разом:</b> ${total} грн\n🕒 <b>Час:</b> ${timeStr};
 
